@@ -1,6 +1,6 @@
 ﻿// Andrew Means & Lucas Stoltman
 // 18 Nov 2019
-// _Organization_ Employee
+// Macrosoft Employee
 // Purpose: Create an application to be used by a company to keep track of 
 // and organize employees by their salaries, hierarchy, and order of promotion.
 using System;
@@ -20,36 +20,58 @@ namespace MeansStoltman_MajorAssignment3
             while (moreUserIteractions)
             {
                 // Prompt user for input
-                string userInput = Console.ReadLine();
-
-                // TODO: Add the following user input options
-
-                // FIND / VIEW / PROMOTE / HIERARCHY / MANAGER
-
-                // FIND
-                // Recursively traverse the binary search tree for the employee
-                // with a matching salary
-
-                // VIEW
-                // Traverse the linkedlist and print out the employees
-
-                // For promotions, the employees are promoted based on merit
-                // and the order of promotion is reflected in a queue
-                // after a promotion we add the promotee to the end of the queue
-                // for promotion next cycle
-
-
-
+                Input();
             }
 
         }
 
         static void Intro()
         {
-            // TODO: Decide on an organization name
-            Console.WriteLine("Welcome to _Organization_ Employee Database");
+            Console.WriteLine("Welcome to Macrosoft Employee Database" +
+                " \nWhat would you like to do?");
         }
 
+        static void Input()
+        {
+            string userInput = Console.ReadLine();
+
+            switch (userInput)
+            {
+                // FIND
+                // Recursively traverse the binary search tree for the employee
+                // with a matching salary
+                case "FIND":
+                    //stuff
+                    break;
+
+                // VIEW
+                // Traverse the linkedlist and print out the employees
+                case "VIEW":
+                    //stuff
+                    break;
+
+                // For promotions, the employees are promoted based on merit
+                // and the order of promotion is reflected in a queue
+                // after a promotion we add the promotee to the end of the queue
+                // for promotion next cycle
+                case "PROMOTE":
+                    //stuff
+                    break;
+
+                case "HIERARCHY":
+                    //stuff
+                    break;
+
+                case "MANAGER":
+                    //stuff
+                    break;
+
+                default:
+                    Console.WriteLine("Please enter \"FIND\",  \"VIEW\", \"PROMOTE\", \"HIERARCHY\", or \"MANAGER\".");
+                    Input();
+                    break;
+            }
+        }
     }
 
     class Employee
@@ -83,6 +105,14 @@ namespace MeansStoltman_MajorAssignment3
         {
             return this.name;
         }
+    }
+
+    // nodes for the BST to use
+    class Node
+    {
+        public int value;
+        public Node left;
+        public Node right;
     }
 
     class BinarySearchTree
