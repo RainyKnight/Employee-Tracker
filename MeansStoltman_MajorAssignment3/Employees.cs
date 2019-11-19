@@ -1,6 +1,6 @@
 ﻿// Andrew Means & Lucas Stoltman
 // 18 Nov 2019
-// Macrosoft Employee
+// Macrohard Employee
 // Purpose: Create an application to be used by a company to keep track of 
 // and organize employees by their salaries, hierarchy, and order of promotion.
 using System;
@@ -12,6 +12,8 @@ namespace MeansStoltman_MajorAssignment3
         static void Main(string[] args)
         {
             bool moreUserIteractions = true;
+
+            // TODO populate the data structures to traverse
 
             // Greet the user
             Intro();
@@ -27,7 +29,7 @@ namespace MeansStoltman_MajorAssignment3
 
         static void Intro()
         {
-            Console.WriteLine("Welcome to Macrosoft Employee Database" +
+            Console.WriteLine("Welcome to Macrohard Employee Database" +
                 " \nWhat would you like to do?");
         }
 
@@ -107,21 +109,56 @@ namespace MeansStoltman_MajorAssignment3
         }
     }
 
-    // nodes for the BST to use
+    // node for the BST to use
     class Node
     {
-        public int value;
+        public int number;
         public Node left;
         public Node right;
+
+        public Node(int value)
+        {
+            number = value;
+            right = null;
+            left = null;
+        }
     }
 
     class BinarySearchTree
     {
+        private Node root;
+        private int count;
+
         // The Binary Search Tree is an efficient way to store
         // and filter the salaries
-        public BinarySearchTree()
+        public void BinaryTree()
         {
-            // TODO: fill in constructor
+            root = null;
+            count = 0;
+        }
+
+        public bool isEmpty()
+        {
+            return root == null;
+        }
+
+        public void insert(int d)
+        {
+            if (isEmpty())
+            {
+                root = new Node(d);
+            }
+            else
+            {
+                root.insertData(ref root, d);
+            }
+
+            count++;
+        }
+
+        public bool search(int s)
+        {
+            return root.search(root, s);
         }
 
         // TODO: Add methods to rearrange the BST if an employee is promoted
