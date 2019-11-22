@@ -24,7 +24,9 @@ namespace MeansStoltman_MajorAssignment3
             Employee lucas = new Employee("Lucas", 100000, adam, anna);
 
             adam.SetNext(lucas);
-            sarah.SetNext(marcus);
+            adam.SetNext(anna);
+            sarah.SetNext(marcus); // added under the manager
+            sarah.SetNext(raj); // added under the manager
 
             // Initialize a promotion queue
             Queue promotionQueue = new Queue();
@@ -48,6 +50,7 @@ namespace MeansStoltman_MajorAssignment3
 
                 if (userInput == "FIND")
                 {
+                    Console.WriteLine("What salary should I search the employee database for?");
                     // TODO: Binary Search for salary
                 }
                 else if (userInput == "VIEW")
@@ -212,7 +215,7 @@ namespace MeansStoltman_MajorAssignment3
     }
 
     // Employee class acts as linkedlist of employees
-    class Employee
+    public class Employee
     {
         string name;
         double salary;
@@ -260,32 +263,30 @@ namespace MeansStoltman_MajorAssignment3
         }
     }
 
-    // node for the BST to use
-    class Node
-    {
-        public int number;
-        public Node left;
-        public Node right;
 
-        public Node(int value)
+    // The Binary Search Tree is an efficient way to store
+    // and filter the salaries
+    public class BinarySearchTree
+    {
+        // node for the BST to use
+        public class Node
         {
-            number = value;
-            right = null;
-            left = null;
+            public Employee employee;
+            public Node left = null;
+            public Node right = null;
+            public double ReturnSalary()
+            {
+                return employee.GetSalary();
+            }
+
         }
-    }
 
-    class BinarySearchTree
-    {
-        private Node root;
-        private int count;
+        public Node root;
+        public int count = 0;
 
-        // The Binary Search Tree is an efficient way to store
-        // and filter the salaries
         public void BinaryTree()
         {
             root = null;
-            count = 0;
         }
 
         public bool isEmpty()
@@ -293,25 +294,44 @@ namespace MeansStoltman_MajorAssignment3
             return root == null;
         }
 
-        public void insert(int d)
+        public void insert(Employee emp)
         {
-            if (isEmpty())
-            {
-                root = new Node(d);
-            }
+            Node newNode = new Node();
+            newNode.employee = emp;
+
+            // add a new node
+            if (root == null)
+                root = newNode;
             else
             {
-                Console.WriteLine();
-                // root.insertData(ref root, d);
+                Node current = root;
+                Node parent;
+
+                while (true)
+                {
+                    parent = current;
+
+                    // less than the current node, navigate left
+                    if (emp.GetSalary() < current.ReturnSalary())
+                    {
+                        root.left = insert(emp);
+                    }
+
+                    // else recur to the right
+                    else
+                    {
+                        current = current.right;
+                        if (current == null)
+                        {
+                            parent.right = newNode;
+                            break;
+                        }
+                    }
+                    }
+                }
             }
 
             count++;
-        }
-
-        public bool search(int s)
-        {
-            return false;
-            //return root.search(root, s);
         }
 
         // TODO: Add methods to rearrange the BST if an employee is promoted
