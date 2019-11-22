@@ -13,7 +13,7 @@ namespace MeansStoltman_MajorAssignment3
         static void Main(string[] args)
         {
             // Setup
-            bool moreUserIteractions = true;
+            bool moreUserInteractions = true;
 
             // Create initial employees
             Employee adam = new Employee("Adam", 110000, null, null);
@@ -43,7 +43,7 @@ namespace MeansStoltman_MajorAssignment3
             Intro();
 
             // Control loop
-            while (moreUserIteractions)
+            while (moreUserInteractions)
             {
                 // Prompt user for input
                 string userInput = Input();
@@ -264,77 +264,96 @@ namespace MeansStoltman_MajorAssignment3
     }
 
 
-    // The Binary Search Tree is an efficient way to store
-    // and filter the salaries
-    public class BinarySearchTree
+    class Node
     {
-        // node for the BST to use
-        public class Node
-        {
-            public Employee employee;
-            public Node left = null;
-            public Node right = null;
-            public double ReturnSalary()
-            {
-                return employee.GetSalary();
-            }
+        public Employee emp;
+        public Node leftc;
+        public Node rightc;
 
+        public Node()
+        {
+            leftc = null;
+            rightc = null;
+            emp = null;
         }
 
-        public Node root;
-        public int count = 0;
+        public void display()
+        {
+            Console.Write("[");
+            Console.Write(emp.GetSalary());
+            Console.Write("]");
+        }
+    }
 
-        public void BinaryTree()
+    // The Binary Search Tree is an efficient way to store
+    // and filter the salaries
+    class Tree
+    {
+        public Node root;
+        public Tree()
         {
             root = null;
         }
-
-        public bool isEmpty()
+        public Node ReturnRoot()
         {
-            return root == null;
+            return root;
         }
-
-        public void insert(Employee emp)
+        public void Insert(Employee emp)
         {
             Node newNode = new Node();
-            newNode.employee = emp;
-
-            // add a new node
+            newNode.emp = emp;
             if (root == null)
                 root = newNode;
             else
             {
                 Node current = root;
                 Node parent;
-
                 while (true)
                 {
                     parent = current;
-
-                    // less than the current node, navigate left
-                    if (emp.GetSalary() < current.ReturnSalary())
+                    if (emp.GetSalary() < current.emp.GetSalary())
                     {
-                        root.left = insert(emp);
-                    }
-
-                    // else recur to the right
-                    else
-                    {
-                        current = current.right;
+                        current = current.leftc;
                         if (current == null)
                         {
-                            parent.right = newNode;
-                            break;
+                            parent.leftc = newNode;
+                            return;
                         }
                     }
+                    else
+                    {
+                        current = current.rightc;
+                        if (current == null)
+                        {
+                            parent.rightc = newNode;
+                            return;
+                        }
                     }
                 }
             }
-
-            count++;
         }
 
-        // TODO: Add methods to rearrange the BST if an employee is promoted
+        public Employee Search(Node node, double sal)
+        {
+            Node current = node;
+
+            // checking if empty
+            if (current == null)
+                current = root;
+               
+            // checking to match
+            if (current.emp.GetSalary() == sal)
+                return current.emp;
+
+            // if less than, go left
+            else if (current.emp.GetSalary() < sal)
+                return Search(current.leftc, sal);
+
+            // if less than, go left
+            else
+                return Search(current.rightc, sal);
+        }
+
     }
 
     class Queue
